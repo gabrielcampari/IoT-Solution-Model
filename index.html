@@ -5,5 +5,125 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
-  <body></body>
+  <body>
+    <h1>Interface do sensor</h1>
+    <div class="container">
+      <div class="panel">
+        <h2>Sensores</h2>
+        <div class="sensor-row">
+          <label>Sensor de presença:</label>
+          <span id="presenceVal">0</span>
+          <button id="togglePresence">Alternar</button>
+        </div>
+        <div class="sensor-row">
+          <label>Sensor de obstrução:</label>
+          <span id="obstructionVal">0</span>
+          <button id="toggleObstruction">Alternar</button>
+        </div>
+        <div class="sensor-row">
+          <label>Simular automaticamente:</label>
+          <input type="checkbox" id="autoSim" />
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Atuador (Porta)</h2>
+        <div class="status-row">
+          <label>Estado da porta:</label>
+          <span id="actuatorVal">1</span>
+          <span id="actuatorLabel">Aberta</span>
+        </div>
+        <div class="log">
+          <strong>Logs locais:</strong>
+          <div id="localLog"></div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Estados dos sensores: 0 ou 1
+      let presence = 0; // 0: ninguém, 1: alguém
+      let obstruction = 0; // 0: livre, 1: obstruída
+      let actuator = 1; // 1: mantém porta aberta, 0: porta fechada
+
+      const presenceVal = document.getElementById("presenceVal");
+      const obstructionVal = document.getElementById("obstructionVal");
+      const actuatorVal = document.getElementById("actuatorVal");
+      const actuatorLabel = document.getElementById("actuatorLabel");
+      const togglePresence = document.getElementById("togglePresence");
+      const toggleObstruction = document.getElementById("toggleObstruction");
+      const autoSim = document.getElementById("autoSim");
+      const localLog = document.getElementById("localLog");
+
+      function updateDom() {
+        presenceVal.textContent = presence;
+        obstructionVal.textContent = obstruction;
+        actuatorVal.textContent = actuator;
+        actuatorLabel.textContent = actuator === 1 ? "Aberta" : "Fechada";
+      }
+
+      togglePresence.addEventListener("click", () => {
+        presence = presence === 1 ? 0 : 1;
+        updateDom();
+      });
+
+      toggleObstruction.addEventListener("click", () => {
+        obstruction = obstruction === 1 ? 0 : 1;
+        updateDom();
+      });
+
+      function evaluateRulesAndSend() {
+        // Regras de negócio:
+        // se presence == 0 => mantém porta aberta (actuator = 1)
+        // se obstruction == 1 => não ativa fechamento (mantém aberta)
+        // se presence == 1 e obstruction == 0 => fecha a porta (actuator = 0)
+
+        if (presence === 0) {
+          actuator = 1;
+        } else if (obstruction === 1) {
+          actuator = 1;
+        } else if (presence === 1 && obstruction === 0) {
+          actuator = 0;
+        }
+
+        updateDom();
+
+        // Mostrar log local
+        const t = new Date().toLocaleTimeString();
+        const msg = `${t} — presence:${presence} obstruction:${obstruction} actuator:${actuator}`;
+        const p = document.createElement("div");
+        p.textContent = msg;
+        localLog.prepend(p);
+
+        // Enviar ao servidor Node
+        fetch("http://localhost:3000/sensors", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ presence, obstruction, actuator }),
+        }).catch((err) => {
+          // não interrompe a simulação local
+          const e = document.createElement("div");
+          e.textContent = `Erro enviando ao servidor: ${err.message}`;
+          localLog.prepend(e);
+        });
+      }
+
+      // Simulação automática: altera sensores aleatoriamente a cada ciclo
+      function maybeAutoSimulate() {
+        if (autoSim.checked) {
+          // pequenas chances de mudar cada sensor
+          if (Math.random() < 0.3) presence = presence === 1 ? 0 : 1;
+          if (Math.random() < 0.2) obstruction = obstruction === 1 ? 0 : 1;
+        }
+      }
+
+      updateDom();
+
+      // Loop a cada 2 segundos
+      setInterval(() => {
+        maybeAutoSimulate();
+        evaluateRulesAndSend();
+      }, 2000);
+    </script>
+  </body>
 </html>
