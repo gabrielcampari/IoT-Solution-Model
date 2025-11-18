@@ -4,7 +4,7 @@
   "description": "Protótipo de interface para leitura de sensores e acionador de porta",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node script.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
