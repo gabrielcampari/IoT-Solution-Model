@@ -6,9 +6,10 @@ app.use(cors());
 app.use(express.json());
 
 function decideDoor(presence, obstruction) {
-  if (presence === 0) return 1;
-  if (obstruction === 1) return 1;
-  return 0;
+//  if (presence === 0) return 1;
+//  if (obstruction === 1) return 1;
+  return (presence === 0 || obstruction === 1)?1:0
+//  return 0;
 }
 
 app.post("/sensors", (req, res) => {
