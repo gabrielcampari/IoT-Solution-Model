@@ -30,7 +30,7 @@ O frontend simula os sensores, mostra o estado da porta e envia as leituras ao s
 
 Pré-requisitos:
 
-Certifique-se de ter o Node.js + NPM instalados na máquina.
+- Certifique-se de ter o Node.js + NPM instalados na máquina.
 
 ### Passo a passo:
 
