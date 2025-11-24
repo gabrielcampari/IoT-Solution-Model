@@ -21,7 +21,7 @@ O backend recebe os valores dos sensores e toma a decisão conforme as regras:
 A cada ciclo, o backend exibe no console:
 
 - Valor do sensor de presença;
-  -Valor do sensor de obstrução;
+- Valor do sensor de obstrução;
 - Estado final da porta (Aberta/Fechada).
 
 O frontend simula os sensores, mostra o estado da porta e envia as leituras ao servidor automaticamente a cada 2 segundos.
