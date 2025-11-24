@@ -1,7 +1,7 @@
 {
   "name": "iot-prototype-interface",
   "version": "1.0.0",
-  "description": "Protótipo de interface para leitura de sensores e acionador de porta",
+  "description": "Protótipo de interface para leitura de sensores e acionador de portas",
   "main": "app.js",
   "scripts": {
     "start": "node script.js"
