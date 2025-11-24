@@ -1,13 +1,63 @@
 # Projeto de uma solução IoT
 
-Projeto da faculdade da matéria: INTERNET DAS COISAS/INTERFACE HOMEM MÁQUINA do 6AN. Professor CLAUDIO ALEXANDRE GANANÇA.
+Solução desenvolvida para a disciplina Internet das Coisas / Interface Homem-Máquina – 6AN
 
-Ideia do projeto: Solução IoT para controlar a porta de um elevador com base na leitura de dois sensores.
+Professor: Claudio Alexandre Ganança
 
 ## Sistema:
 
-Frontend: Feito em HTML, CSS e JavaScript.
+Frontend: HTML, CSS e JavaScript.
 
-Backend: Script Node.js
+Backend: Script Node.js, Express.js e CORS.
 
-Lógica por trás: O backend recebe os dados dos sensores e aplica a regra de negócio para determinar se a porta deve ser fechada ou mantida aberta, exibindo o resultado no console. Na inteface do usuário simula a leitura dos sensores e envia esses dados para o backend.
+Lógica por trás:
+
+O backend recebe os valores dos sensores e toma a decisão conforme as regras:
+
+1. presence = 0 → Porta aberta;
+2. obstruction = 1 → Porta aberta;
+3. presence = 1 e obstruction = 0 → Porta fechada.
+
+A cada ciclo, o backend exibe no console:
+
+- Valor do sensor de presença;
+  -Valor do sensor de obstrução;
+- Estado final da porta (Aberta/Fechada).
+
+O frontend simula os sensores, mostra o estado da porta e envia as leituras ao servidor automaticamente a cada 2 segundos.
+
+## Iniciando o projeto:
+
+Pré-requisitos:
+
+Certifique-se de ter o Node.js + NPM instalados na máquina.
+
+### Passo a passo:
+
+No diretório do projeto:
+
+1. Instale o npm dentro do projeto:
+
+`npm install`
+
+2. Inicie o Backend:
+
+`npm start`
+
+O servidor iniciará na porta 3000.
+
+3. Execute o frontend:
+
+- Use a extensão Name: Live Server.
+
+- VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer
+
+Ou
+
+- Abra o arquivo diretamente no navegador:
+
+`index.html`
+
+## Fluxo do projeto:
+
+Frontend → envia sensores → Backend → aplica regras → retorna ação da porta → Front atualiza interface
