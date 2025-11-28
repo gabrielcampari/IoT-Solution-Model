@@ -8,9 +8,9 @@ Grupo: Gabriel Campari Correia, Gabriel Imolene Vieira, Gustavo Almeida de Moura
 
 ## Sistema:
 
-Frontend: HTML, CSS e JavaScript.
+Frontend: HTML (index.html), CSS(style.css) e JavaScript(app.js).
 
-Backend: Script Node.js, Express.js e CORS.
+Backend: Script Node.js (script.js), Express.js e CORS.
 
 Lógica por trás:
 
