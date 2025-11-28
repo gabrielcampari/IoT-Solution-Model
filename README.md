@@ -4,6 +4,8 @@ Solução desenvolvida para a disciplina Internet das Coisas / Interface Homem-M
 
 Professor: Claudio Alexandre Ganança
 
+Grupo: Gabriel Campari Correia, Gabriel Imolene Vieira, Gustavo Almeida de Moura, Glenda Borges Ferreira de Carvalho, Kauê Sanches Barbi, Lívia Mezashi.
+
 ## Sistema:
 
 Frontend: HTML, CSS e JavaScript.
@@ -61,3 +63,7 @@ Ou
 ## Fluxo do projeto:
 
 Frontend → envia sensores → Backend → aplica regras → retorna ação da porta → Front atualiza interface
+
+## Demonstração do Projeto
+
+![Demonstração do Projeto](img/demo.gif)
